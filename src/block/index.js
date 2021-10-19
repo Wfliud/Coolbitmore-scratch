@@ -2565,33 +2565,76 @@ class MbitMoreBlocks {
                     }
                 },
                 {
-                    opcode: 'setServo',
-                    text: formatMessage({
-                        id: 'mbitMore.setServo',
-                        default: 'set [PIN] Servo [ANGLE]',
-                        description: 'set pin to Servo mode and the angle(0 to 180)'
-                    }),
-                    blockType: BlockType.COMMAND,
-                    arguments: {
-                        PIN: {
-                            type: ArgumentType.STRING,
-                            menu: 'gpio',
-                            defaultValue: '0'
-                        },
-                        ANGLE: {
-                            type: ArgumentType.NUMBER,
-                            defaultValue: 0
-                        },
-                        RANGE: {
-                            type: ArgumentType.NUMBER,
-                            defaultValue: 2000
-                        },
-                        CENTER: {
-                            type: ArgumentType.NUMBER,
-                            defaultValue: 1500
-                        }
-                    }
-                },
+					opcode: 'motionservo',
+					text: formatMessage({
+						id: 'mbitMore.motionservo',
+						default: 'set [PIN] Servo [ANGLE]',
+						description: 'set Servo to angle(0 to 180)'
+					}),
+					blockType: BlockType.COMMAND,
+					arguments: {
+						PIN: {
+							type:ArgumentType.STRING,
+							menu:'servopin',
+							defaultValue: '0'
+						},
+						ANGLE: {
+							type: ArgumentType.NUMBER,
+							defaultValue: 0
+						}
+					}
+				},
+				{
+					opcode: 'setmotor',
+					text: formatMessage({
+						id: 'mbitMore.setmotor',
+						default: 'set [PIN] Motor rotate [DIR] at [SPEED]',
+						description: 'Sets the motor to rotate in the specified direction at the specified speed(0 to 255)'
+					}),
+					blockType: BlockType.COMMAND,
+					arguments: {
+						PIN: {
+							type: ArgumentType.STRING,
+							menu: 'motorpin',
+							defaultValue: '0'
+						},
+						SPEED: {
+							type: ArgumentType.NUMBER,
+							defaultValue: 0
+						},
+						DIR: {
+							type: ArgumentType.STRING,
+							menu: {
+								Forward: 'Forward',
+								Backward: 'Backward'
+							},
+							defaultValue: '0'
+						}
+					}
+				},
+				{
+					opcode: 'setcar',
+					text: formatMessage({
+						id: 'mbitMore.setcar',
+						default: 'Drive car [DIR] at [SPEED]',
+						description: 'Let car go forward or backward at a specified speed'
+					}),
+					blockType: BlockType.COMMAND,
+					arguments:{
+						DIR: {
+							type: ArgumentType.STRING,
+							menu: {
+								Forward: 'Forward',
+								Backward: 'Backward'
+							},
+							defaultValue: '0'
+						},
+						SPEED: {
+							type: ArgumentType.NUMBER,
+							defaultValue: 0
+						}
+					}
+				},
                 {
                     opcode: 'playTone',
                     text: formatMessage({
