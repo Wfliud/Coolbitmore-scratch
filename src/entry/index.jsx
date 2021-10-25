@@ -20,10 +20,10 @@ const translationMap = {
 };
 
 const entry = {
-    name: 'CoolbitMore',
-    extensionId: 'CoolbitMore',
-    extensionURL: 'https://wfliud.github.io/Coolbitmore-scratch/dist/microbitMore.mjs',
-    collaborator: 'Coolguy lab',
+    name: 'Microbit More',
+    extensionId: 'microbitMore',
+    extensionURL: 'https://microbit-more.github.io/dist/microbitMore.mjs',
+    collaborator: 'Yengawa Lab',
     iconURL: microbitMoreIconURL,
     insetIconURL: microbitMoreInsetIconURL,
     get description () {
