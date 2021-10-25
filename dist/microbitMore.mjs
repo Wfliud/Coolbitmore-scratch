@@ -4691,14 +4691,14 @@ var formatMessage = function formatMessage(messageData) {
   return messageData.defaultMessage;
 };
 
-var EXTENSION_ID = 'CoolbitMore';
+var EXTENSION_ID = 'microbitMore';
 /**
  * URL to get this extension as a module.
  * When it was loaded as a module, 'extensionURL' will be replaced a URL which is retrieved from.
  * @type {string}
  */
 
-var extensionURL = 'https://wfliud.github.io/Coolbitmore-scratch/dist/microbitMore.mjs';
+var extensionURL = 'https://microbit-more.github.io/dist/microbitMore.mjs';
 /**
  * Icon png to be displayed at the left edge of each extension block, encoded as a data URI.
  * @type {string}
@@ -8253,7 +8253,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @return {string} - the name of this extension.
      */
     function get() {
-      return 'CoolbitMore';
+      return 'Microbit More';
     }
     /**
      * @return {string} - the ID of this extension.
