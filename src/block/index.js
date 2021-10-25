@@ -370,6 +370,11 @@ const MotorPin = {
     P8: 'P8/12'
 }
 
+const Direction ={
+    Forward: 'Forward',
+    Backward: 'Backward'
+}
+
 /**
  * The unit-value of the gravitational acceleration from Micro:bit.
  * @type {number}
@@ -1974,6 +1979,27 @@ class MbitMoreBlocks {
         ];
     }
 
+    get DIR_MENU(){
+        return[
+            {
+                text:formatMessage({
+                    id: 'mbitMore.dir.for',
+                    default: 'Forward',
+                    description: 'Forward'
+                }),
+                value: Direction.Forward
+            },
+            {
+                text:formatMessage({
+                    id: 'mbitMore.dir.bac',
+                    default: 'Baclward',
+                    description: 'Backward'
+                }),
+                value: Direction.Backward
+            },
+        ]
+    }
+
     get DIGITAL_VALUE_MENU () {
         return [
             {
@@ -2631,10 +2657,7 @@ class MbitMoreBlocks {
 						},
 						DIR: {
 							type: ArgumentType.STRING,
-							menu: {
-								Forward: 'Forward',
-								Backward: 'Backward'
-							},
+							menu: 'dir',
 							defaultValue: 'Forward'
 						}
 					}
@@ -2843,6 +2866,10 @@ class MbitMoreBlocks {
                 motorpin: {
                     acceptReporters: false,
                     items: this.MOTORPIN_MENU
+                },
+                dir: {
+                    acceptReporters:false,
+                    items: this.DIR_MENU
                 },
                 axis: {
                     acceptReporters: false,

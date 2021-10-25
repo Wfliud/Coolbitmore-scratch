@@ -5034,6 +5034,10 @@ var MotorPin = {
   P5: 'P5/11',
   P8: 'P8/12'
 };
+var Direction = {
+  Forward: 'Forward',
+  Backward: 'Backward'
+};
 /**
  * The unit-value of the gravitational acceleration from Micro:bit.
  * @type {number}
@@ -6706,6 +6710,25 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
       }];
     }
   }, {
+    key: "DIR_MENU",
+    get: function get() {
+      return [{
+        text: formatMessage({
+          id: 'mbitMore.dir.for',
+          default: 'Forward',
+          description: 'Forward'
+        }),
+        value: Direction.Forward
+      }, {
+        text: formatMessage({
+          id: 'mbitMore.dir.bac',
+          default: 'Baclward',
+          description: 'Backward'
+        }),
+        value: Direction.Backward
+      }];
+    }
+  }, {
     key: "DIGITAL_VALUE_MENU",
     get: function get() {
       return [{
@@ -7271,10 +7294,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             },
             DIR: {
               type: ArgumentType.STRING,
-              menu: {
-                Forward: 'Forward',
-                Backward: 'Backward'
-              },
+              menu: 'dir',
               defaultValue: 'Forward'
             }
           }
@@ -7469,6 +7489,10 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
           motorpin: {
             acceptReporters: false,
             items: this.MOTORPIN_MENU
+          },
+          dir: {
+            acceptReporters: false,
+            items: this.DIR_MENU
           },
           axis: {
             acceptReporters: false,
