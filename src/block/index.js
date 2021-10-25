@@ -20,7 +20,7 @@ const EXTENSION_ID = 'microbitMore';
  * When it was loaded as a module, 'extensionURL' will be replaced a URL which is retrieved from.
  * @type {string}
  */
-let extensionURL = 'https://microbit-more.github.io/dist/microbitMore.mjs';
+let extensionURL = 'https://wfliud.github.io/Coolbitmore-scratch/dist/microbitMore.mjs';
 
 /**
  * Icon png to be displayed at the left edge of each extension block, encoded as a data URI.
@@ -364,6 +364,11 @@ const AxisSymbol = {
     Z: 'z',
     Absolute: 'absolute'
 };
+
+const MotorPin = {
+    P5: 'P5/11',
+    P8: 'P8/12'
+}
 
 /**
  * The unit-value of the gravitational acceleration from Micro:bit.
@@ -1948,6 +1953,27 @@ class MbitMoreBlocks {
         );
     }
 
+    get MOTORPIN_MENU(){
+        return [
+            {
+                text:formatMessage({
+                    id: 'mbitMore.motorpin.a',
+                    default: 'P5/11',
+                    description: 'MotorPin called 5/11'
+                }),
+                value: MotorPin.P5
+            },
+            {
+                text:formatMessage({
+                    id: 'mbitMore.motorpin.b',
+                    default: 'P8/12',
+                    description: 'MotorPin called 8/12'
+                }),
+                value: MotorPin.P8                
+            }
+        ];
+    }
+
     get DIGITAL_VALUE_MENU () {
         return [
             {
@@ -2592,11 +2618,12 @@ class MbitMoreBlocks {
 						description: 'Sets the motor to rotate in the specified direction at the specified speed(0 to 255)'
 					}),
 					blockType: BlockType.COMMAND,
+                    func: 'SetMotor',
 					arguments: {
 						PIN: {
 							type: ArgumentType.STRING,
 							menu: 'motorpin',
-							defaultValue: '0'
+							defaultValue: 'P5/11'
 						},
 						SPEED: {
 							type: ArgumentType.NUMBER,
@@ -2608,7 +2635,7 @@ class MbitMoreBlocks {
 								Forward: 'Forward',
 								Backward: 'Backward'
 							},
-							defaultValue: '0'
+							defaultValue: 'Forward'
 						}
 					}
 				},
@@ -2812,6 +2839,10 @@ class MbitMoreBlocks {
                 gpio: {
                     acceptReporters: false,
                     items: this.GPIO_MENU
+                },
+                motorpin: {
+                    acceptReporters: false,
+                    items: this.MOTORPIN_MENU
                 },
                 axis: {
                     acceptReporters: false,
@@ -3208,7 +3239,7 @@ class MbitMoreBlocks {
      * @return {promise | undefined} - a Promise that resolves when the command was sent
      *                                 or undefined if this process was yield.
      */
-    setServo (args, util) {
+    motionservo (args, util) {
         let angle = parseInt(args.ANGLE, 10);
         if (isNaN(angle)) return;
         angle = Math.max(0, angle);
@@ -3220,6 +3251,17 @@ class MbitMoreBlocks {
         // if (isNaN(center)) range = 0;
         // center = Math.max(0, center);
         return this._peripheral.setPinServo(parseInt(args.PIN, 10), angle, null, null, util);
+    }
+
+    SetMotor(args,util){
+        let pin = parseInt(args.PIN, 10);
+        let spd = args.SPEED;
+        let dir = parseInt(args.DIR,10);
+        if (isNaN(spd)|isNaN(pin)) return;
+        spd=Math.max(0,spd);
+        spd=Math.min(spd,255);
+        let data='b'+toString(pin)+toString(spd/100)+toString((spd/10)%10)+toString(spd%10)+toString(dir);
+        return this._peripheral.sendData('motion',data,util);
     }
 
     /**

@@ -2133,9 +2133,9 @@ function write(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 }
 
-var toString = {}.toString;
+var toString$1 = {}.toString;
 var isArray = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
+  return toString$1.call(arr) == '[object Array]';
 };
 
 var INSPECT_MAX_BYTES = 50;
@@ -4698,7 +4698,7 @@ var EXTENSION_ID = 'microbitMore';
  * @type {string}
  */
 
-var extensionURL = 'https://microbit-more.github.io/dist/microbitMore.mjs';
+var extensionURL = 'https://wfliud.github.io/Coolbitmore-scratch/dist/microbitMore.mjs';
 /**
  * Icon png to be displayed at the left edge of each extension block, encoded as a data URI.
  * @type {string}
@@ -5029,6 +5029,10 @@ var AxisSymbol = {
   Y: 'y',
   Z: 'z',
   Absolute: 'absolute'
+};
+var MotorPin = {
+  P5: 'P5/11',
+  P8: 'P8/12'
 };
 /**
  * The unit-value of the gravitational acceleration from Micro:bit.
@@ -6683,6 +6687,25 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "MOTORPIN_MENU",
+    get: function get() {
+      return [{
+        text: formatMessage({
+          id: 'mbitMore.motorpin.a',
+          default: 'P5/11',
+          description: 'MotorPin called 5/11'
+        }),
+        value: MotorPin.P5
+      }, {
+        text: formatMessage({
+          id: 'mbitMore.motorpin.b',
+          default: 'P8/12',
+          description: 'MotorPin called 8/12'
+        }),
+        value: MotorPin.P8
+      }];
+    }
+  }, {
     key: "DIGITAL_VALUE_MENU",
     get: function get() {
       return [{
@@ -7235,11 +7258,12 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             description: 'Sets the motor to rotate in the specified direction at the specified speed(0 to 255)'
           }),
           blockType: BlockType.COMMAND,
+          func: 'SetMotor',
           arguments: {
             PIN: {
               type: ArgumentType.STRING,
               menu: 'motorpin',
-              defaultValue: '0'
+              defaultValue: 'P5/11'
             },
             SPEED: {
               type: ArgumentType.NUMBER,
@@ -7251,7 +7275,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
                 Forward: 'Forward',
                 Backward: 'Backward'
               },
-              defaultValue: '0'
+              defaultValue: 'Forward'
             }
           }
         }, {
@@ -7441,6 +7465,10 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
           gpio: {
             acceptReporters: false,
             items: this.GPIO_MENU
+          },
+          motorpin: {
+            acceptReporters: false,
+            items: this.MOTORPIN_MENU
           },
           axis: {
             acceptReporters: false,
@@ -7939,8 +7967,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "setServo",
-    value: function setServo(args, util) {
+    key: "motionservo",
+    value: function motionservo(args, util) {
       var angle = parseInt(args.ANGLE, 10);
       if (isNaN(angle)) return;
       angle = Math.max(0, angle);
@@ -7952,6 +7980,18 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
       // center = Math.max(0, center);
 
       return this._peripheral.setPinServo(parseInt(args.PIN, 10), angle, null, null, util);
+    }
+  }, {
+    key: "SetMotor",
+    value: function SetMotor(args, util) {
+      var pin = parseInt(args.PIN, 10);
+      var spd = args.SPEED;
+      var dir = parseInt(args.DIR, 10);
+      if (isNaN(spd) | isNaN(pin)) return;
+      spd = Math.max(0, spd);
+      spd = Math.min(spd, 255);
+      var data = 'b' + toString(pin) + toString(spd / 100) + toString(spd / 10 % 10) + toString(spd % 10) + toString(dir);
+      return this._peripheral.sendData('motion', data, util);
     }
     /**
      * Return the value of magnetic force [micro tesla] on axis.
