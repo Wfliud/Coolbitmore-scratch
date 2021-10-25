@@ -13,14 +13,14 @@ const base64ToUint8Array = base64 => Buffer.from(base64, 'base64');
 
 let formatMessage = messageData => messageData.defaultMessage;
 
-const EXTENSION_ID = 'microbitMore';
+const EXTENSION_ID = 'CoolbitMore';
 
 /**
  * URL to get this extension as a module.
  * When it was loaded as a module, 'extensionURL' will be replaced a URL which is retrieved from.
  * @type {string}
  */
-let extensionURL = 'https://microbit-more.github.io/dist/microbitMore.mjs';
+let extensionURL = 'https://wfliud.github.io/Coolbitmore-scratch/dist/microbitMore.mjs';
 
 /**
  * Icon png to be displayed at the left edge of each extension block, encoded as a data URI.
@@ -1637,7 +1637,7 @@ class MbitMoreBlocks {
      * @return {string} - the name of this extension.
      */
     static get EXTENSION_NAME () {
-        return 'Microbit More';
+        return 'CoolbitMore';
     }
 
     /**
