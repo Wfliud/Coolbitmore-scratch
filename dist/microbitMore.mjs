@@ -8014,7 +8014,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
       spd = Math.max(0, spd);
       spd = Math.min(spd, 255);
       var data = 'b' + toString(pin) + toString(spd / 100) + toString(spd / 10 % 10) + toString(spd % 10) + toString(dir);
-      return this._peripheral.sendData('motion', data, util);
+      return this.sendData(['motion', data], util);
     }
     /**
      * Return the value of magnetic force [micro tesla] on axis.

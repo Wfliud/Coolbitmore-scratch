@@ -3287,7 +3287,7 @@ class MbitMoreBlocks {
         spd=Math.max(0,spd);
         spd=Math.min(spd,255);
         let data='b'+toString(pin)+toString(spd/100)+toString((spd/10)%10)+toString(spd%10)+toString(dir);
-        return this._peripheral.sendData('motion',data,util);
+        return this.sendData(['motion',data],util)
     }
 
     /**
