@@ -2864,7 +2864,6 @@ class MbitMoreBlocks {
                     items: this.GPIO_MENU
                 },
                 motorpin: {
-                    acceptReporters: false,
                     items: this.MOTORPIN_MENU
                 },
                 dir: {

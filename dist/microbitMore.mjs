@@ -7487,7 +7487,6 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             items: this.GPIO_MENU
           },
           motorpin: {
-            acceptReporters: false,
             items: this.MOTORPIN_MENU
           },
           dir: {
