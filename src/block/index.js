@@ -3286,8 +3286,8 @@ class MbitMoreBlocks {
         if (isNaN(spd)|isNaN(pin)) return;
         spd=Math.max(0,spd);
         spd=Math.min(spd,255);
-        let data='b'+toString(pin)+toString(spd/100)+toString((spd/10)%10)+toString(spd%10)+toString(dir);
-        return this.sendData(['motion',data],util)
+        let data='b'+String(pin)+Math.max(0,spd/100-0.5).toFixed()+Math.max(0,(spd/10-0.5)%10).toFixed()+(spd%10).toFixed()+String(dir);
+        return this._peripheral.sendData('motion',data,util);
     }
 
     /**

@@ -2133,9 +2133,9 @@ function write(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 }
 
-var toString$1 = {}.toString;
+var toString = {}.toString;
 var isArray = Array.isArray || function (arr) {
-  return toString$1.call(arr) == '[object Array]';
+  return toString.call(arr) == '[object Array]';
 };
 
 var INSPECT_MAX_BYTES = 50;
@@ -8013,8 +8013,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
       if (isNaN(spd) | isNaN(pin)) return;
       spd = Math.max(0, spd);
       spd = Math.min(spd, 255);
-      var data = 'b' + toString(pin) + toString(spd / 100) + toString(spd / 10 % 10) + toString(spd % 10) + toString(dir);
-      return this.sendData(['motion', data], util);
+      var data = 'b' + String(pin) + Math.max(0, spd / 100 - 0.5).toFixed() + Math.max(0, (spd / 10 - 0.5) % 10).toFixed() + (spd % 10).toFixed() + String(dir);
+      return this._peripheral.sendData('motion', data, util);
     }
     /**
      * Return the value of magnetic force [micro tesla] on axis.
