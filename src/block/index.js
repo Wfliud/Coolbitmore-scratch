@@ -3269,18 +3269,13 @@ class MbitMoreBlocks {
         if (isNaN(angle)) return;
         angle = Math.max(0, angle);
         angle = Math.min(angle, 180);
-        // let range = parseInt(args.RANGE, 10);
-        // if (isNaN(range)) range = 0;
-        // range = Math.max(0, range);
-        // let center = parseInt(args.CENTER, 10);
-        // if (isNaN(center)) range = 0;
-        // center = Math.max(0, center);
-        return this._peripheral.setPinServo(parseInt(args.PIN, 10), angle, null, null, util);
+        let data ='a' + String(parseInt(args.Pin,10)) + Math.max(0,angle/100-0.5).toFixed()+Math.max(0,(angle/10-0.5)%10).toFixed()+(angle%10).tofixed()+'0';
+        return this._peripheral.sendData('motion',data,util);
     }
 
     setmotor(args,util){
         let pin = Number(arg.PIN=="P5/11");
-        let spd = args.SPEED;
+        let spd = parseInt(args.SPEED,10);
         let dir = Number(args.DIR=="Forward");
         if (isNaN(spd)) return;
         spd=Math.max(0,spd);
