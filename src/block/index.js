@@ -2644,7 +2644,6 @@ class MbitMoreBlocks {
 						description: 'Sets the motor to rotate in the specified direction at the specified speed(0 to 255)'
 					}),
 					blockType: BlockType.COMMAND,
-                    func: 'SetMotor',
 					arguments: {
 						PIN: {
 							type: ArgumentType.STRING,
@@ -3279,11 +3278,11 @@ class MbitMoreBlocks {
         return this._peripheral.setPinServo(parseInt(args.PIN, 10), angle, null, null, util);
     }
 
-    SetMotor(args,util){
-        let pin = parseInt(args.PIN, 10);
+    setmotor(args,util){
+        let pin = Number(arg.PIN=="P5/11");
         let spd = args.SPEED;
-        let dir = parseInt(args.DIR,10);
-        if (isNaN(spd)|isNaN(pin)) return;
+        let dir = Number(args.DIR=="Forward");
+        if (isNaN(spd)) return;
         spd=Math.max(0,spd);
         spd=Math.min(spd,255);
         let data='b'+String(pin)+Math.max(0,spd/100-0.5).toFixed()+Math.max(0,(spd/10-0.5)%10).toFixed()+(spd%10).toFixed()+String(dir);
