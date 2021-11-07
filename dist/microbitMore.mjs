@@ -61,6 +61,22 @@ var entry = {
   translationMap: translationMap
 };
 
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -8003,7 +8019,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
     value: function setmotor(args, util) {
       console.log(args.PIN);
       console.log(args.SPEED);
-      console.log(args.DIR.type);
+      console.log(_typeof(args.DIR));
       var pin = Number(arg.PIN == "P5/11");
       var spd = parseInt(args.SPEED, 10);
       var dir = Number(args.DIR == "Forward");

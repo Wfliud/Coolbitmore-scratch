@@ -3274,7 +3274,7 @@ class MbitMoreBlocks {
     }
 
     setmotor(args,util){
-        console.log(args.PIN);console.log(args.SPEED);console.log(args.DIR.type);
+        console.log(args.PIN);console.log(args.SPEED);console.log(typeof(args.DIR));
         let pin = Number(arg.PIN=="P5/11");
         let spd = parseInt(args.SPEED,10);
         let dir = Number(args.DIR=="Forward");
