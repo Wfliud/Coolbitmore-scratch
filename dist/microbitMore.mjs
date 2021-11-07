@@ -7281,7 +7281,6 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             description: 'Sets the motor to rotate in the specified direction at the specified speed(0 to 255)'
           }),
           blockType: BlockType.COMMAND,
-          func: 'SetMotor',
           arguments: {
             PIN: {
               type: ArgumentType.STRING,
@@ -7995,25 +7994,27 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
       var angle = parseInt(args.ANGLE, 10);
       if (isNaN(angle)) return;
       angle = Math.max(0, angle);
-      angle = Math.min(angle, 180); // let range = parseInt(args.RANGE, 10);
-      // if (isNaN(range)) range = 0;
-      // range = Math.max(0, range);
-      // let center = parseInt(args.CENTER, 10);
-      // if (isNaN(center)) range = 0;
-      // center = Math.max(0, center);
-
-      return this._peripheral.setPinServo(parseInt(args.PIN, 10), angle, null, null, util);
+      angle = Math.min(angle, 180);
+      var data = 'a' + String(parseInt(args.Pin, 10)) + Math.max(0, angle / 100 - 0.5).toFixed() + Math.max(0, (angle / 10 - 0.5) % 10).toFixed() + (angle % 10).tofixed() + '0';
+      return this._peripheral.sendData('motion', data, util);
     }
   }, {
-    key: "SetMotor",
-    value: function SetMotor(args, util) {
-      var pin = parseInt(args.PIN, 10);
-      var spd = args.SPEED;
-      var dir = parseInt(args.DIR, 10);
-      if (isNaN(spd) | isNaN(pin)) return;
+    key: "setmotor",
+    value: function setmotor(args, util) {
+      console.log(args.PIN);
+      console.log(args.SPEED);
+      console.log(args.DIR.type);
+      var pin = Number(arg.PIN == "P5/11");
+      var spd = parseInt(args.SPEED, 10);
+      var dir = Number(args.DIR == "Forward");
+      console.log(pin);
+      console.log(spd);
+      console.log(dir);
+      if (isNaN(spd)) return;
       spd = Math.max(0, spd);
       spd = Math.min(spd, 255);
       var data = 'b' + String(pin) + Math.max(0, spd / 100 - 0.5).toFixed() + Math.max(0, (spd / 10 - 0.5) % 10).toFixed() + (spd % 10).toFixed() + String(dir);
+      console.log(data);
       return this._peripheral.sendData('motion', data, util);
     }
     /**

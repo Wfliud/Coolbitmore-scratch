@@ -3274,13 +3274,16 @@ class MbitMoreBlocks {
     }
 
     setmotor(args,util){
+        console.log(args.PIN);console.log(args.SPEED);console.log(args.DIR.type);
         let pin = Number(arg.PIN=="P5/11");
         let spd = parseInt(args.SPEED,10);
         let dir = Number(args.DIR=="Forward");
+        console.log(pin);console.log(spd);console.log(dir);
         if (isNaN(spd)) return;
         spd=Math.max(0,spd);
         spd=Math.min(spd,255);
         let data='b'+String(pin)+Math.max(0,spd/100-0.5).toFixed()+Math.max(0,(spd/10-0.5)%10).toFixed()+(spd%10).toFixed()+String(dir);
+        console.log(data);
         return this._peripheral.sendData('motion',data,util);
     }
 
