@@ -3273,8 +3273,7 @@ class MbitMoreBlocks {
         return this._peripheral.sendData('motion',data,util);
     }
 
-    setmotor(args,util){
-        console.log(typeof(args.PIN));console.log(typeof(args.SPEED));console.log(typeof(args.DIR));
+    setmotor(args,util){;
         let pin = Number(arg.PIN=="P5/11");
         let spd = parseInt(args.SPEED,10);
         let dir = Number(args.DIR=="Forward");
