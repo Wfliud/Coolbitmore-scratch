@@ -8001,7 +8001,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "setmotor",
     value: function setmotor(args, util) {
-      var pin = Number(arg.PIN == "P5/11");
+      var pin = Number(args.PIN == "P5/11");
       var spd = parseInt(args.SPEED, 10);
       var dir = Number(args.DIR == "Forward");
       console.log(pin);
