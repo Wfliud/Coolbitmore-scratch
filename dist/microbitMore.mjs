@@ -7255,25 +7255,6 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             }
           }
         }, {
-          opcode: 'motionservo',
-          text: formatMessage({
-            id: 'mbitMore.motionservo',
-            default: 'set [PIN] Servo [ANGLE]',
-            description: 'set Servo to angle(0 to 180)'
-          }),
-          blockType: BlockType.COMMAND,
-          arguments: {
-            PIN: {
-              type: ArgumentType.STRING,
-              menu: 'servopin',
-              defaultValue: '0'
-            },
-            ANGLE: {
-              type: ArgumentType.NUMBER,
-              defaultValue: 0
-            }
-          }
-        }, {
           opcode: 'setmotor',
           text: formatMessage({
             id: 'mbitMore.setmotor',
@@ -7295,28 +7276,6 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
               type: ArgumentType.STRING,
               menu: 'dir',
               defaultValue: 'Forward'
-            }
-          }
-        }, {
-          opcode: 'setcar',
-          text: formatMessage({
-            id: 'mbitMore.setcar',
-            default: 'Drive car [DIR] at [SPEED]',
-            description: 'Let car go forward or backward at a specified speed'
-          }),
-          blockType: BlockType.COMMAND,
-          arguments: {
-            DIR: {
-              type: ArgumentType.STRING,
-              menu: {
-                Forward: 'Forward',
-                Backward: 'Backward'
-              },
-              defaultValue: '0'
-            },
-            SPEED: {
-              type: ArgumentType.NUMBER,
-              defaultValue: 0
             }
           }
         }, {
@@ -7989,16 +7948,6 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "motionservo",
-    value: function motionservo(args, util) {
-      var angle = parseInt(args.ANGLE, 10);
-      if (isNaN(angle)) return;
-      angle = Math.max(0, angle);
-      angle = Math.min(angle, 180);
-      var data = 'a' + String(parseInt(args.Pin, 10)) + Math.max(0, angle / 100 - 0.5).toFixed() + Math.max(0, (angle / 10 - 0.5) % 10).toFixed() + (angle % 10).tofixed() + '0';
-      return this._peripheral.sendData('motion', data, util);
-    }
-  }, {
     key: "setmotor",
     value: function setmotor(args, util) {
       var pin = Number(args.PIN == "P5/11");
@@ -8203,13 +8152,19 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * Rerutn the last content of the messge or undefined if the data which has the label is not received.
      * @param {object} args - the block's arguments.
      * @param {number} args.LABEL - label of the data.
-     * @return {?(string | number)} - content of the data.
+     * @return {?(string | number)} - content of the data or empty string when the data was null
      */
 
   }, {
     key: "getDataLabeled",
     value: function getDataLabeled(args) {
-      return this._peripheral.getDataLabeled(args.LABEL);
+      var data = this._peripheral.getDataLabeled(args.LABEL);
+
+      if (data === null) {
+        return '';
+      }
+
+      return data;
     }
     /**
      * Update the previous occured time of all received data.

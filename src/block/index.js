@@ -2616,26 +2616,6 @@ class MbitMoreBlocks {
                         }
                     }
                 },
-                {
-					opcode: 'motionservo',
-					text: formatMessage({
-						id: 'mbitMore.motionservo',
-						default: 'set [PIN] Servo [ANGLE]',
-						description: 'set Servo to angle(0 to 180)'
-					}),
-					blockType: BlockType.COMMAND,
-					arguments: {
-						PIN: {
-							type:ArgumentType.STRING,
-							menu:'servopin',
-							defaultValue: '0'
-						},
-						ANGLE: {
-							type: ArgumentType.NUMBER,
-							defaultValue: 0
-						}
-					}
-				},
 				{
 					opcode: 'setmotor',
 					text: formatMessage({
@@ -2658,29 +2638,6 @@ class MbitMoreBlocks {
 							type: ArgumentType.STRING,
 							menu: 'dir',
 							defaultValue: 'Forward'
-						}
-					}
-				},
-				{
-					opcode: 'setcar',
-					text: formatMessage({
-						id: 'mbitMore.setcar',
-						default: 'Drive car [DIR] at [SPEED]',
-						description: 'Let car go forward or backward at a specified speed'
-					}),
-					blockType: BlockType.COMMAND,
-					arguments:{
-						DIR: {
-							type: ArgumentType.STRING,
-							menu: {
-								Forward: 'Forward',
-								Backward: 'Backward'
-							},
-							defaultValue: '0'
-						},
-						SPEED: {
-							type: ArgumentType.NUMBER,
-							defaultValue: 0
 						}
 					}
 				},
@@ -3264,14 +3221,6 @@ class MbitMoreBlocks {
      * @return {promise | undefined} - a Promise that resolves when the command was sent
      *                                 or undefined if this process was yield.
      */
-    motionservo (args, util) {
-        let angle = parseInt(args.ANGLE, 10);
-        if (isNaN(angle)) return;
-        angle = Math.max(0, angle);
-        angle = Math.min(angle, 180);
-        let data ='a' + String(parseInt(args.Pin,10)) + Math.max(0,angle/100-0.5).toFixed()+Math.max(0,(angle/10-0.5)%10).toFixed()+(angle%10).tofixed()+'0';
-        return this._peripheral.sendData('motion',data,util);
-    }
 
     setmotor(args,util){;
         let pin = Number(args.PIN=="P5/11");
@@ -3433,10 +3382,14 @@ class MbitMoreBlocks {
      * Rerutn the last content of the messge or undefined if the data which has the label is not received.
      * @param {object} args - the block's arguments.
      * @param {number} args.LABEL - label of the data.
-     * @return {?(string | number)} - content of the data.
+     * @return {?(string | number)} - content of the data or empty string when the data was null
      */
     getDataLabeled (args) {
-        return this._peripheral.getDataLabeled(args.LABEL);
+        const data = this._peripheral.getDataLabeled(args.LABEL);
+        if (data === null) {
+            return '';
+        }
+        return data;
     }
 
     /**
