@@ -2616,6 +2616,30 @@ class MbitMoreBlocks {
                         }
                     }
                 },
+                {
+                    opcode: 'setservo',
+                    text:formatMessage({
+                        id: 'mbitMore.setservo',
+                        default: 'set [PIN] Servo rotate to [ANG]',
+                        description: 'Set the servo to specified angle'
+                    }),
+                    blockType:BlockType.COMMAND,
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.STRING,
+                            menu:{
+                                P1:'P1',
+                                P2:'P2',
+                                P16:'P16'
+                            },
+                            defaultValue: P16
+                        },
+                        ANG: {
+                            type:ArgumentType.NUMBER,
+                            defaultValue:0
+                        }
+                    }
+                },
 				{
 					opcode: 'setmotor',
 					text: formatMessage({
@@ -3221,8 +3245,16 @@ class MbitMoreBlocks {
      * @return {promise | undefined} - a Promise that resolves when the command was sent
      *                                 or undefined if this process was yield.
      */
+    setservo(args,util){
+        let pin=1-Number(args.PIN=='P1');if(args.PIN=='P16')pin=2;
+        let ang=parseInt(args.ANG,10);
+        if(isNaN(ang))return;
+        ang=Math.max(0,Math.min(ang,180));
+        let data='a'+String(pin)+Math.max(0,ang/100-0.5).toFixed()+Math.max(0,(ang/10-0.5)%10).toFixed()+(ang%10).toFixed()+'0';
+        return this._peripheral.sendData('motion',data,util);
+    }
 
-    setmotor(args,util){;
+    setmotor(args,util){
         let pin = 1-Number(args.PIN=="P5/11");
         let spd = parseInt(args.SPEED,10);
         let dir = 1-Number(args.DIR=="Forward");
