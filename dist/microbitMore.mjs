@@ -7950,17 +7950,13 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "setmotor",
     value: function setmotor(args, util) {
-      var pin = Number(args.PIN == "P5/11");
+      var pin = 1 - Number(args.PIN == "P5/11");
       var spd = parseInt(args.SPEED, 10);
-      var dir = Number(args.DIR == "Forward");
-      console.log(pin);
-      console.log(spd);
-      console.log(dir);
+      var dir = 1 - Number(args.DIR == "Forward");
       if (isNaN(spd)) return;
       spd = Math.max(0, spd);
       spd = Math.min(spd, 255);
       var data = 'b' + String(pin) + Math.max(0, spd / 100 - 0.5).toFixed() + Math.max(0, (spd / 10 - 0.5) % 10).toFixed() + (spd % 10).toFixed() + String(dir);
-      console.log(data);
       return this._peripheral.sendData('motion', data, util);
     }
     /**
